@@ -12,7 +12,6 @@ import com.retailstore.repositories.DiscountRepository;
 import com.retailstore.repositories.ProductRepository;
 import com.retailstore.repositories.UserRepository;
 import com.retailstore.service.RetailService;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;

@@ -19,20 +19,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Utility {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);
-    
+
     public Date formatDate(String _date) {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date = (Date) formatter.parse(_date);
         } catch (Exception e) {
-            
+
         }
         return date;
     }
-    
+
     public int yearBetweenDates(Date startDate, Date endDate) {
         int diffInYears = 0;
         if (startDate != null && endDate != null) {
@@ -41,7 +41,7 @@ public class Utility {
         }
         return diffInYears;
     }
-    
+
     public String formatCurrency(Double d) {
         d = Math.round(d * 100.0) / 100.0;
         DecimalFormat df = new DecimalFormat("#.00");
