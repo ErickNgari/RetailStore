@@ -41,16 +41,6 @@ public class RetailService {
     @Autowired
     Utility utility;
 
-    public List<Product> getProducts() {
-        List<Product> list = productRepository.getProducts();
-        return list;
-    }
-
-    public List<User> getUsers() {
-        List<User> list = userRepository.getUsers();
-        return list;
-    }
-
     public Map<String, String> findNetPayable(Bill bill) {
         Map<String, String> params = new HashMap<>();
         try {

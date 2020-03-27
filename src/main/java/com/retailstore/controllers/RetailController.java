@@ -54,13 +54,13 @@ public class RetailController {
 
     @GetMapping(path = "/getProducts")
     public List<Product> getProducts() {
-        List<Product> list = retailService.getProducts();
+        List<Product> list = productRepository.getProducts();
         return list;
     }
 
     @GetMapping(path = "/getUsers")
     public ResponseEntity<List<User>> getUsers() {
-        List<User> list = retailService.getUsers();
+        List<User> list = userRepository.getUsers();
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
