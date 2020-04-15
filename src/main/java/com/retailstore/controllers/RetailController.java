@@ -8,10 +8,9 @@ package com.retailstore.controllers;
 import com.retailstore.beans.Bill;
 import com.retailstore.models.Product;
 import com.retailstore.models.User;
-import com.retailstore.repositories.DiscountRepository;
-import com.retailstore.repositories.ProductRepository;
-import com.retailstore.repositories.UserRepository;
+import com.retailstore.service.ProductService;
 import com.retailstore.service.RetailService;
+import com.retailstore.service.UserService;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -40,11 +39,9 @@ public class RetailController {
     @Autowired
     RetailService retailService;
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    DiscountRepository discountRepository;
+    UserService userService;
 
     @PostConstruct
     public void init() {
@@ -53,13 +50,13 @@ public class RetailController {
 
     @GetMapping(path = "/getProducts")
     public List<Product> getProducts() {
-        List<Product> list = productRepository.getProducts();
+        List<Product> list = productService.getProducts();
         return list;
     }
 
     @GetMapping(path = "/getUsers")
     public ResponseEntity<List<User>> getUsers() {
-        List<User> list = userRepository.getUsers();
+        List<User> list = userService.getUsers();
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 

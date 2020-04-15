@@ -30,14 +30,4 @@ public class DiscountRepository {
         return DISCOUNTS;
     }
 
-    public Discounts getDiscount(String type) {
-        Discounts discount = null;
-        for (Discounts d : getDiscounts()) {
-            if (d.getDiscountType().equals(type)) {
-                discount = d;
-                break;
-            }
-        }
-        return discount;
-    }
 }

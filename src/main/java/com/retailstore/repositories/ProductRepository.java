@@ -9,7 +9,6 @@ import com.retailstore.models.Product;
 import com.retailstore.utilities.Utility;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,14 +37,5 @@ public class ProductRepository {
 
     public List<Product> getProducts() {
         return PRODUCTS;
-    }
-
-    public Product findProduct(Integer id) {
-        for (Product p : getProducts()) {
-            if (Objects.equals(p.getId(), id)) {
-                return p;
-            }
-        }
-        return null;
     }
 }

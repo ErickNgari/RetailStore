@@ -10,9 +10,6 @@ import com.retailstore.models.Discounts;
 import com.retailstore.models.Orders;
 import com.retailstore.models.Product;
 import com.retailstore.models.User;
-import com.retailstore.repositories.DiscountRepository;
-import com.retailstore.repositories.ProductRepository;
-import com.retailstore.repositories.UserRepository;
 import com.retailstore.utilities.Utility;
 import java.io.IOException;
 import java.util.Date;
@@ -32,26 +29,19 @@ public class RetailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RetailService.class);
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     @Autowired
-    DiscountRepository discountRepository;
+    DiscountService discountService;
     @Autowired
     Utility utility;
 
     public Map<String, String> findNetPayable(Bill bill) {
         Map<String, String> params = new HashMap<>();
         try {
-            User user = userRepository.findUser(bill.getUserId());
-            if (user == null) {
-                throw new IOException("User doesn't exist");
-            }
-            Product product = productRepository.findProduct(bill.getProductId());
-            if (product == null) {
-                throw new Exception("Product doesn't exist");
-            }
-
+            User user = userService.findUser(bill.getUserId());            
+            Product product = productService.findProduct(bill.getProductId());            
             if (product.getQuantity() < bill.getQuantity()) {
                 throw new Exception("Available product quantity " + product.getQuantity());
             }
@@ -64,27 +54,27 @@ public class RetailService {
             if (product.getCategory() == Product.Categories.Grocery) {
                 LOGGER.info("Grocery Discount");
                 int num100Bills = (int) (totalCost / 100);
-                discount = discountRepository.getDiscount("FixedEvery100OnTheBillDiscount");
+                discount = discountService.getDiscount("FixedEvery100OnTheBillDiscount");
                 totalDiscountAmount = discount.getDiscountValue() * num100Bills;
             } else {
                 if (user.getIsEmployee()) {
                     LOGGER.info("Employee Discount");
-                    discount = discountRepository.getDiscount("PercentageStoreEmployeeDiscount");
+                    discount = discountService.getDiscount("PercentageStoreEmployeeDiscount");
                     totalDiscountAmount = (totalCost * discount.getDiscountValue()) / 100;
                 } else if (user.getIsAffiliate()) {
                     LOGGER.info("Affiliate Discount");
-                    discount = discountRepository.getDiscount("PercentStoreAffiliateDiscount");
+                    discount = discountService.getDiscount("PercentStoreAffiliateDiscount");
                     totalDiscountAmount = (totalCost * discount.getDiscountValue()) / 100;
                 } else {
                     Integer yearsDifference = utility.yearBetweenDates(user.getDateRegistered(), currentDate);
                     if (yearsDifference >= 2) {
                         LOGGER.info("Over 2 Years Discount");
-                        discount = discountRepository.getDiscount("PercentOverTwoYearsCustomerDiscount");
+                        discount = discountService.getDiscount("PercentOverTwoYearsCustomerDiscount");
                         totalDiscountAmount = (totalCost * discount.getDiscountValue()) / 100;
                     } else {
                         LOGGER.info("Every 100 On The Bill Discount");
                         int num100Bills = (int) (totalCost / 100);
-                        discount = discountRepository.getDiscount("FixedEvery100OnTheBillDiscount");
+                        discount = discountService.getDiscount("FixedEvery100OnTheBillDiscount");
                         totalDiscountAmount = discount.getDiscountValue() * num100Bills;
                     }
                 }

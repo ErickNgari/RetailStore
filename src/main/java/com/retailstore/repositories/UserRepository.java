@@ -39,13 +39,4 @@ public class UserRepository {
     public List<User> getUsers() {
         return USERS;
     }
-
-    public User findUser(Integer id) {
-        for (User u : getUsers()) {
-            if (Objects.equals(u.getId(), id)) {
-                return u;
-            }
-        }
-        return null;
-    }
 }

@@ -2,10 +2,9 @@ package com.retailstore;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.retailstore.beans.Bill;
-import com.retailstore.repositories.DiscountRepository;
-import com.retailstore.repositories.ProductRepository;
-import com.retailstore.repositories.UserRepository;
+import com.retailstore.service.ProductService;
 import com.retailstore.service.RetailService;
+import com.retailstore.service.UserService;
 import com.retailstore.utilities.Utility;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,13 +36,10 @@ class RetailstoreApplicationUnitTests {
     private MockMvc mockMvc;
 
     @MockBean
-    UserRepository userRepository;
+    UserService userService;
 
     @MockBean
-    ProductRepository productRepository;
-
-    @MockBean
-    DiscountRepository discountRepository;
+    ProductService productService;
 
     @MockBean
     RetailService retailService;
